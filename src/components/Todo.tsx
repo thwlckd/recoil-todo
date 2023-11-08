@@ -5,18 +5,22 @@ import useTodoList from '../hooks/useTodoList';
 
 const Todo = ({ id, content, isComplete }: ITodo) => {
   const [isChecked, setIsChecked] = useState(isComplete);
-  const { toggleTodo } = useTodoList();
+  const { toggleTodo, removeTodo } = useTodoList();
 
   const handleToggleTodo = () => {
     setIsChecked((prev) => !prev);
     toggleTodo(id);
   };
 
+  const handleRemoveTodo = () => {
+    removeTodo(id);
+  };
+
   return (
     <TodoWrapper>
       <Toggle type='checkbox' onClick={handleToggleTodo} />
-      <Text isChecked={String(isChecked)}>{content}</Text>
-      <Button>Remove</Button>
+      <Text $isChecked={String(isChecked)}>{content}</Text>
+      <Button onClick={handleRemoveTodo}>Remove</Button>
     </TodoWrapper>
   );
 };
@@ -39,12 +43,12 @@ const Toggle = styled.input`
   margin: 0 10px;
 `;
 
-const Text = styled.p<{ isChecked: string }>`
+const Text = styled.p<{ $isChecked: string }>`
   flex: 1;
   word-break: break-all;
   font-size: 24px;
-  text-decoration: ${({ isChecked }) =>
-    isChecked === 'true' ? 'line-through' : 'none'};
+  text-decoration: ${({ $isChecked }) =>
+    $isChecked === 'true' ? 'line-through' : 'none'};
 `;
 
 const Button = styled.button`
