@@ -1,4 +1,4 @@
-import GlobalStyle from './style/GlobalStyle';
+import GlobalStyle from './GlobalStyle';
 import Home from './pages/Home';
 import Layout from './components/Layout';
 import { RecoilRoot } from 'recoil';

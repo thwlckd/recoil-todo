@@ -5,17 +5,25 @@ const useTodoList = () => {
   const setTodoList = useSetRecoilState(todoListState);
 
   const addTodo = (content: string) => {
-    setTodoList((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        content,
-        isComplete: false,
-      },
-    ]);
+    const id = crypto.randomUUID();
+    const newTodo = { id, content, isComplete: false };
+
+    localStorage.setItem(id, JSON.stringify(newTodo));
+
+    setTodoList((prev) => [...prev, newTodo]);
   };
 
   const toggleTodo = (id: string) => {
+    const item = localStorage.getItem(id);
+
+    if (item) {
+      const { id, content, isComplete } = JSON.parse(item);
+      localStorage.setItem(
+        id,
+        JSON.stringify({ id, content, isComplete: !isComplete })
+      );
+    }
+
     setTodoList((prev) => [
       ...prev.map((todo) => {
         if (todo.id === id) return { ...todo, isComplete: !todo.isComplete };
@@ -25,6 +33,8 @@ const useTodoList = () => {
   };
 
   const removeTodo = (id: string) => {
+    localStorage.removeItem(id);
+
     setTodoList((prev) => [...prev.filter((todo) => todo.id !== id)]);
   };
 

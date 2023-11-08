@@ -3,11 +3,6 @@ import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-
-  :root{
-    --header-bg-color: green;
-    --footer-bg-color: lime;
-  }
   
   body {
     margin: 0;
