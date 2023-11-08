@@ -1,25 +1,17 @@
 import { useRef } from 'react';
-import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { todoListState } from '../store/atoms';
+import useTodoList from '../hooks/useTodoList';
 
 const Input = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [todoList, setTodoList] = useRecoilState(todoListState);
+  const { addTodo } = useTodoList();
 
   const handleAddTodo = (e: React.KeyboardEvent) => {
     const input = inputRef.current?.value;
 
     if (e.key !== 'Enter' || !input) return;
 
-    setTodoList((prev) => [
-      ...prev,
-      {
-        id: todoList.length + 1,
-        content: input,
-        isComplete: false,
-      },
-    ]);
+    addTodo(input);
 
     inputRef.current.value = '';
   };

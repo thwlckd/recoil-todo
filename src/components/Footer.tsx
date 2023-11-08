@@ -19,6 +19,7 @@ export default Footer;
 const FooterContainer = styled.footer`
   width: 100%;
   height: 5dvh;
+  margin-top: 2dvh;
   text-align: center;
 `;
 
