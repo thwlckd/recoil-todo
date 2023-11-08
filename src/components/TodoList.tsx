@@ -43,7 +43,12 @@ const TodoList = () => {
       <TodoNav>
         {Children.toArray(
           NAV_BTNS.map((btn) => (
-            <NavBtn onClick={() => setTodoListType(btn)}>{btn}</NavBtn>
+            <NavBtn
+              onClick={() => setTodoListType(btn)}
+              $textDeco={todoListType === btn ? 'underline' : 'none'}
+            >
+              {btn}
+            </NavBtn>
           ))
         )}
       </TodoNav>
@@ -61,10 +66,13 @@ const TodoContainer = styled.section`
 const TodoNav = styled.nav`
   display: flex;
   justify-content: space-evenly;
+  padding-top: 10px;
 `;
 
-const NavBtn = styled.button`
+const NavBtn = styled.button<{ $textDeco: string }>`
   border: none;
+  background-color: inherit;
+  text-decoration: ${({ $textDeco }) => $textDeco};
 
   &:hover {
     text-decoration: underline;
