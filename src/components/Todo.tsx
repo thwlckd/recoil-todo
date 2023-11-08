@@ -18,7 +18,11 @@ const Todo = ({ id, content, isComplete }: ITodo) => {
 
   return (
     <TodoWrapper>
-      <Toggle type='checkbox' onClick={handleToggleTodo} />
+      <Toggle
+        type='checkbox'
+        onClick={handleToggleTodo}
+        defaultChecked={isChecked}
+      />
       <Text $isChecked={String(isChecked)}>{content}</Text>
       <Button onClick={handleRemoveTodo}>Remove</Button>
     </TodoWrapper>
