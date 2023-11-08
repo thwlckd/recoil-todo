@@ -1,14 +1,17 @@
 import GlobalStyle from './style/GlobalStyle';
 import Home from './pages/Home';
 import Layout from './components/Layout';
+import { RecoilRoot } from 'recoil';
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <Layout>
-        <Home />
-      </Layout>
+      <RecoilRoot>
+        <Layout>
+          <Home />
+        </Layout>
+      </RecoilRoot>
     </>
   );
 }
