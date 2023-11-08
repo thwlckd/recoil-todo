@@ -1,11 +1,21 @@
 import styled from 'styled-components';
 import { ITodo } from '../types/todo';
+import { useState } from 'react';
+import useTodoList from '../hooks/useTodoList';
 
 const Todo = ({ id, content, isComplete }: ITodo) => {
+  const [isChecked, setIsChecked] = useState(isComplete);
+  const { toggleTodo } = useTodoList();
+
+  const handleToggleTodo = () => {
+    setIsChecked((prev) => !prev);
+    toggleTodo(id);
+  };
+
   return (
     <TodoWrapper>
-      <Toggle type='checkbox' />
-      <Text>{content}</Text>
+      <Toggle type='checkbox' onClick={handleToggleTodo} />
+      <Text isChecked={String(isChecked)}>{content}</Text>
       <Button>Remove</Button>
     </TodoWrapper>
   );
@@ -29,10 +39,12 @@ const Toggle = styled.input`
   margin: 0 10px;
 `;
 
-const Text = styled.label`
+const Text = styled.p<{ isChecked: string }>`
   flex: 1;
   word-break: break-all;
   font-size: 24px;
+  text-decoration: ${({ isChecked }) =>
+    isChecked === 'true' ? 'line-through' : 'none'};
 `;
 
 const Button = styled.button`

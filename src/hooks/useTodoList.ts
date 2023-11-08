@@ -15,7 +15,15 @@ const useTodoList = () => {
     ]);
   };
 
-  return { addTodo };
+  const toggleTodo = (id: number) => {
+    const newTodoList = todoList.map((todo) => {
+      if (todo.id === id) return { ...todo, isComplete: !todo.isComplete };
+      else return todo;
+    });
+    setTodoList(newTodoList);
+  };
+
+  return { addTodo, toggleTodo };
 };
 
 export default useTodoList;
