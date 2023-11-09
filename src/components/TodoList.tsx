@@ -1,53 +1,26 @@
-import { useRecoilValue } from 'recoil';
-import { todoListState } from '../store/atoms';
-import styled from 'styled-components';
-import Todo from './Todo';
 import { Children, useState } from 'react';
-
-const NAV_BTNS = ['ALL', 'ACTIVE', 'COMPLETE'];
+import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
+import { LIST_TYPE, todoListActiveState } from '../store/selectors';
+import Todo from './Todo';
 
 const TodoList = () => {
-  const todoList = useRecoilValue(todoListState);
   const [todoListType, setTodoListType] = useState('ALL');
+  const todoList = useRecoilValue(todoListActiveState(todoListType));
 
   return (
     <TodoContainer>
-      {todoList.map(({ id, content, isComplete }) => {
-        if (todoListType === 'ALL')
-          return (
-            <Todo key={id} id={id} content={content} isComplete={isComplete} />
-          );
-        else if (todoListType === 'ACTIVE')
-          return (
-            isComplete || (
-              <Todo
-                key={id}
-                id={id}
-                content={content}
-                isComplete={isComplete}
-              />
-            )
-          );
-        else
-          return (
-            isComplete && (
-              <Todo
-                key={id}
-                id={id}
-                content={content}
-                isComplete={isComplete}
-              />
-            )
-          );
-      })}
+      {todoList.map(({ id, content, isComplete }) => (
+        <Todo key={id} id={id} content={content} isComplete={isComplete} />
+      ))}
       <TodoNav>
         {Children.toArray(
-          NAV_BTNS.map((btn) => (
+          LIST_TYPE.map((type) => (
             <NavBtn
-              onClick={() => setTodoListType(btn)}
-              $textDeco={todoListType === btn ? 'underline' : 'none'}
+              onClick={() => setTodoListType(type)}
+              $textDeco={todoListType === type ? 'underline' : 'none'}
             >
-              {btn}
+              {type}
             </NavBtn>
           ))
         )}
